@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silent_treatment/login.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 void main() {
   runApp(const App());
@@ -47,7 +48,16 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),    
-            Text('Unfinished - Plan UI first'),
+            MobileScanner(
+              onDetect:(capture) {
+                final barcode = capture.barcodes.first;
+                final String? code = barcode.rawValue;
+                
+                if (code != null) {
+                  print('send clock in to manager');
+                }
+              },
+            ),
           ],
         ),
 
