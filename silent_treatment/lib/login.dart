@@ -89,8 +89,6 @@ bool rememberMe = false;
                     fontSize: 13.0,))
           ),
         ]
-        controlAffinity: ListTileControlAffinity.leading,
-        contentPadding: EdgeInsets.zero,
       )
     );
   }
