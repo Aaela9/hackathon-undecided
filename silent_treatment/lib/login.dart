@@ -73,15 +73,24 @@ bool rememberMe = false;
                 hintText: "Password",
               ),
             CheckboxListTile(
-              value: false, 
+              value: rememberMe, 
               onChanged: (bool? value) { // bool tri-state, value can be true, false, or null
                 setState(() {
                   rememberMe = value ?? false; // if null, use false
                 }
-              );
+                );
+            
             },
+            title: const Text(
+              'Remember me',
+              style: TextStyle(
+              color: Colors.white,
+            
+                    fontSize: 13.0,))
           ),
         ]
+        controlAffinity: ListTileControlAffinity.leading,
+        contentPadding: EdgeInsets.zero,
       )
     );
   }
