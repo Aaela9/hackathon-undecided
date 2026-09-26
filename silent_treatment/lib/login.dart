@@ -18,8 +18,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(text: '123@123');
+  final TextEditingController passwordController = TextEditingController(text: '123456');
   final FlutterSecureStorage storage = const FlutterSecureStorage();
   bool rememberMe = false;
 
