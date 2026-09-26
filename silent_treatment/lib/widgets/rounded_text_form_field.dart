@@ -7,8 +7,7 @@ class RoundedTextFormField extends StatelessWidget {
   final bool obscureText;
   final ValueChanged<String>? onChanged;
   final Widget? suffixIcon;
-  // ignore: prefer_typing_uninitialized_variables
-  final controller;
+  final TextEditingController? controller;
 
   const RoundedTextFormField({super.key, required this.prefixIcon, required this.hintText, this.obscureText = false, this.controller, this.onChanged, this.suffixIcon});
 

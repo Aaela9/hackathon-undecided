@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-// widgets
+
 import 'package:silent_treatment/widgets/rounded_button.dart';
 import 'package:silent_treatment/widgets/rounded_text_form_field.dart';
-
-// pages
 import 'package:silent_treatment/main.dart';
 
 class SignupPage extends StatefulWidget {
@@ -12,63 +10,62 @@ class SignupPage extends StatefulWidget {
   @override
   State<SignupPage> createState() => _SignupPageState();
 }
-  class _SignupPageState extends State<SignupPage> {
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                topFields(),
-                bottomButtons(),
-              ],
-            ),
+class _SignupPageState extends State<SignupPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              topFields(),
+              bottomButtons(),
+            ],
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
 
-
-    Widget topFields() {
-      return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.5,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Align(
-              alignment: .topLeft,
-              child:
-              BackButton(
-                color: Colors.white,
-              )
+  Widget topFields() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: BackButton(
+              color: Colors.white,
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
           RoundedTextFormField(
-            prefixIcon: Icons.abc_outlined, 
-            hintText: "Username"
+            prefixIcon: Icons.abc_outlined,
+            hintText: 'Username',
           ),
           RoundedTextFormField(
-            prefixIcon: Icons.email_outlined, 
-            hintText: "Email"
+            prefixIcon: Icons.email_outlined,
+            hintText: 'Email',
           ),
           RoundedTextFormField(
-            prefixIcon: Icons.password_outlined, 
-            hintText: "Password",
+            prefixIcon: Icons.password_outlined,
+            hintText: 'Password',
             obscureText: true,
           ),
           RoundedTextFormField(
-            prefixIcon: Icons.password_outlined, 
-            hintText: "Confirm password",
+            prefixIcon: Icons.password_outlined,
+            hintText: 'Confirm password',
             obscureText: true,
           ),
         ],
-            ),
-      );
+      ),
+    );
   }
 
   Widget bottomButtons() {
@@ -78,18 +75,17 @@ class SignupPage extends StatefulWidget {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.1,
         child: RoundedCircularButton(
-          text: 'SIGN UP', 
-          onPressed: () {Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomePage(
-                title: 'Silent Treatment',
-                )
+          text: 'SIGN UP',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(title: 'Silent Treatment'),
               ),
             );
           },
         ),
-      ), 
+      ),
     );
   }
 }
