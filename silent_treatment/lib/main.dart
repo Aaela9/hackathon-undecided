@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:silent_treatment/login.dart';
-import 'package:silent_treatment/widgets/appointments.dart';
 import 'package:silent_treatment/widgets/rounded_button.dart';
 import 'package:silent_treatment/data/mock_people.dart';
 
