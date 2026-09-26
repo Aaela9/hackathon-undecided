@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:silent_treatment/login.dart';
+import 'package:silent_treatment/widgets/appointments.dart';
 import 'package:silent_treatment/widgets/rounded_button.dart';
+import 'package:silent_treatment/data/mock_people.dart';
+
+final List<Person> tasks = [
+  Person(name: 'Aaelas', event: 'Requires attention'),
+  Person(name: 'Angel', event: 'Medication'),
+  Person(name: 'Alex', event: 'idk'),
+];
 
 void main() {
   runApp(const App());
@@ -53,7 +61,7 @@ class _HomePageState extends State<HomePage> {
             // clock in button
             Container(
               height: MediaQuery.of(context).size.height * 0.45,
-              width: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * 0.45,
               child: RawMaterialButton(
                 onPressed: () {
                     setState(() {
@@ -78,24 +86,31 @@ class _HomePageState extends State<HomePage> {
               )
             ),
             // schedule
-            Expanded(
-              child: Padding(
+                Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: Column(
-                    children: [
-                      Text('task 1',
-                      style: TextStyle(
-                        color: Colors.white60
-                      ),),
-                      Text('task 2'),
-                      Text('task 3'),
-                    ],
-                  ),
+                  height: MediaQuery.of(context).size.width * 0.5,
+                  child: ListView.builder(
+                      clipBehavior: Clip.none,
+                      itemCount: tasks.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final currentTask = tasks[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)
+                            ),
+                            minVerticalPadding: 20,
+                            tileColor: Colors.white30,
+                            title: Text(currentTask.name),
+                            trailing: Text(currentTask.event),
+                          ),
+                        );
+                      }
+                    ),
+                )
                 ),
-              ),
-            ),
             
             // break button
             Padding(
