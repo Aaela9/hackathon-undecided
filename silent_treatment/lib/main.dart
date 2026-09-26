@@ -5,9 +5,9 @@ import 'package:silent_treatment/widgets/rounded_button.dart';
 import 'package:silent_treatment/data/mock_people.dart';
 
 final List<Person> tasks = [
-  Person(name: 'Aaelas', event: 'Requires attention'),
-  Person(name: 'Tom', event: 'Medication'),
-  Person(name: 'Alex', event: 'idk'),
+  Person(name: 'Lynn', event: 'Requires attention 9:00am'),
+  Person(name: 'Tom', event: 'Medication 10:00am'),
+  Person(name: 'Alex', event: 'etc etc 3:00pm'),
 ];
 
 void main() {
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                 shape: const CircleBorder(),
                 child: Text(
                   is_clockedIn ? 'Clock-out' : 'Clock-in',
-                  textScaleFactor: 2,
+                  textScaleFactor: 1.25,
                   style: const TextStyle(
                     color: Colors.white60
                   ),
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: RoundedCircularButton(
-                text: 'Take a break',
+                text: 'Take a break' ,
                 onPressed: () {
                   if (is_clockedIn) {
                     setState(() {
