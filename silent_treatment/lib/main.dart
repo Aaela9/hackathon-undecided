@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:silent_treatment/login.dart';
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import 'package:silent_treatment/widgets/rounded_button.dart';
+>>>>>>> parent of 94617e1 (schedule)
 =======
 import 'package:silent_treatment/widgets/rounded_button.dart';
 >>>>>>> parent of 94617e1 (schedule)
