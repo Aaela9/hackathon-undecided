@@ -1,13 +1,14 @@
+import 'dart:async'; // Required for Timer
 import 'package:flutter/material.dart';
 import 'package:silent_treatment/login.dart';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import 'package:silent_treatment/widgets/rounded_button.dart';
->>>>>>> parent of 94617e1 (schedule)
-=======
-import 'package:silent_treatment/widgets/rounded_button.dart';
->>>>>>> parent of 94617e1 (schedule)
+import 'package:silent_treatment/data/mock_people.dart';
+
+final List<Person> tasks = [
+  Person(name: 'Aaelas', event: 'Requires attention'),
+  Person(name: 'Tom', event: 'Medication'),
+  Person(name: 'Alex', event: 'idk'),
+];
 
 void main() {
   runApp(const App());
@@ -25,118 +26,158 @@ class App extends StatelessWidget {
       home: const LoginPage(),
     );
   }
-}
+} 
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
 
   final String title;
-
+  
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  bool is_clockedIn = false;
+  
+  // Stopwatch and Timer variables
+  final Stopwatch _stopwatch = Stopwatch();
+  Timer? _timer;
+
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is destroyed to prevent memory leaks
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  // Helper method to format Duration into HH:MM:SS
+  String _formatTime(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  void _startTimer() {
+    _stopwatch.start();
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      setState(() {}); // Force UI to redraw and update the stopwatch text
+    });
+  }
+
+  void _pauseTimer() {
+    _stopwatch.stop();
+    _timer?.cancel();
+    setState(() {});
+  }
+
+  void _resetTimer() {
+    _stopwatch.reset();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
+              children: [
                 BackButton(
                   color: Colors.white,
-<<<<<<< HEAD
-                ),
-              ],
-            ),
-            const Text(
-              'Unfinished - Plan UI first',
-              style: TextStyle(color: Colors.white),
-=======
                 )
               ],
             ),    
             // clock in button
             Container(
-              height: MediaQuery.of(context).size.height * 0.45,
-              width: MediaQuery.of(context).size.width * 0.7,
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width * 0.3,
               child: RawMaterialButton(
                 onPressed: () {
-                    setState(() {
-                      is_clockedIn = !is_clockedIn;
-                    });
-                  if (is_clockedIn == true) {
-                    // timer start
+                  setState(() {
+                    is_clockedIn = !is_clockedIn;
+                  });
+                  if (is_clockedIn) {
+                    _startTimer();
+                  } else {
+                    _pauseTimer();
+                    _resetTimer(); // Resets timer to 00:00:00 when clocked out completely
                   }
-                  },
+                },
                 elevation: 2.0,
-                fillColor: Color.fromRGBO(119, 147, 190, 1),
-                constraints: BoxConstraints(minWidth: 0.0),
-                padding: EdgeInsets.all(15.0),
-                shape: CircleBorder(),
+                fillColor: const Color.fromRGBO(119, 147, 190, 1),
+                constraints: const BoxConstraints(minWidth: 0.0),
+                padding: const EdgeInsets.all(15.0),
+                shape: const CircleBorder(),
                 child: Text(
                   is_clockedIn ? 'Clock-out' : 'Clock-in',
                   textScaleFactor: 2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white60
                   ),
-                  ),
+                ),
               )
             ),
-            // schedule
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: Column(
-                    children: [
-                      Text('task 1',
-                      style: TextStyle(
-                        color: Colors.white60
-                      ),),
-                      Text('task 2'),
-                      Text('task 3'),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            
             // break button
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: RoundedCircularButton(text: "Break", onPressed: () {
-                // pause timer
-              }
+              child: RoundedCircularButton(
+                text: 'Take a break',
+                onPressed: () {
+                  if (is_clockedIn) {
+                    setState(() {
+                      is_clockedIn = false; // Set UI state to clocked out
+                    });
+                    _pauseTimer(); // Pauses the timer without resetting it
+                  }
+                }
               ),
->>>>>>> parent of 94617e1 (schedule)
+            ),
+            // schedule
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                height: MediaQuery.of(context).size.width * 0.5,
+                child: ListView.builder(
+                  clipBehavior: Clip.none,
+                  itemCount: tasks.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final currentTask = tasks[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)
+                        ),
+                        minVerticalPadding: 20,
+                        tileColor: Colors.white30,
+                        title: Text(currentTask.name),
+                        trailing: Text(currentTask.event),
+                      ),
+                    );
+                  }
+                ),
+              )
+            ),
+            
+            // Stopwatch timer in small red text
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(
+                _formatTime(_stopwatch.elapsed),
+                style: const TextStyle(
+                  color: Colors.white60,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
-      ),
+      )
     );
   }
 }
-
-// Features I want:
-// groups -- configure identity and demands
-// "trade" -- find a compromise for the proposed issue
-// elaboration on "trade":
-// person A submits complaint
-// person B will have this complaint in a bubble until addressed
-// person B can interact with this bubble
-// shut down the bubble or they can address this bubble by either accepting or compromising
-// by compromising, the bubble is sent back to person A
-// person A can then address them the same way until resolved
-
-// Also should have a "spit" feature, where it's just complaints but no desired solution
-// battery level
-// shared calendar with import/export
-// notifications
-// settings
-// user profile

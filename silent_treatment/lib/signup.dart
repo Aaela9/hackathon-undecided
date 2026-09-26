@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silent_treatment/login.dart';
 
 import 'package:silent_treatment/widgets/rounded_button.dart';
 import 'package:silent_treatment/widgets/rounded_text_form_field.dart';
@@ -80,7 +81,7 @@ class _SignupPageState extends State<SignupPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomePage(title: 'Silent Treatment'),
+                builder: (context) => const LoginPage(),
               ),
             );
           },

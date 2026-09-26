@@ -134,6 +134,16 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       children: [
         Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RoundedCircularButton(text: 'test - go to home page', onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(title: 'Home Page',),
+                ),
+              );}),
+        ),
+        Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
